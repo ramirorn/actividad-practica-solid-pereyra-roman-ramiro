@@ -1,5 +1,9 @@
-class Rectangle {
-  constructor(protected width: number, protected height: number) {}
+interface Shape {
+  area(): number;
+}
+
+class Rectangle implements Shape {
+  constructor(protected width: number, protected height: number) { }
 
   setWidth(width: number): void {
     this.width = width;
@@ -14,23 +18,20 @@ class Rectangle {
   }
 }
 
-class Square extends Rectangle {
-  setWidth(width: number): void {
-    this.width = width;
-    this.height = width;
-  }
+class Square implements Shape {
+  constructor(protected side: number) { }
 
-  setHeight(height: number): void {
-    this.width = height;
-    this.height = height;
+  setSide(side: number): void {
+    this.side = side;
+  }
+  area(): number {
+    return this.side * this.side;
   }
 }
 
-function resizeRectangle(rectangle: Rectangle): void {
-  rectangle.setWidth(5);
-  rectangle.setHeight(10);
-  console.log(`Area esperada: 50. Area obtenida: ${rectangle.area()}`);
+function resizeRectangle(shape: Shape): void {
+  console.log(`Area esperada: 50. Area obtenida: ${shape.area()}`);
 }
+resizeRectangle(new Rectangle(25, 2));
+resizeRectangle(new Square(5));
 
-resizeRectangle(new Rectangle(1, 1));
-resizeRectangle(new Square(1, 1));
